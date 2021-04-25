@@ -1,0 +1,8 @@
+<h1>Property Binding in Angular</h1>
+<input type="text" [disabled]="disabledBox" [value]="name" />
+<br />
+<br />
+<input type="text" disabled="{{ disabledBox }}" value="{{ name }}" />
+<br />
+<br />
+<button (click)="enableBox()">Enable text Box</button>
