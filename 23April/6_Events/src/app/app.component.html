@@ -1,0 +1,15 @@
+<h1>Important Events in Angular</h1>
+<button (click)="myEvent('this is click event')">Click Me</button>
+<br />
+<br />
+<input type="text" #box (keyup.space)="myEvent('blur event')" />
+<br />
+<br />
+<input type="text" #box (blur)="myEvent('blur event')" />
+<h1 (mouseover)="myEvent('mouseover')" style="background-color: skyblue">
+  mouse event
+</h1>
+
+<h1 (mouseleave)="myEvent('mouseover')" style="background-color: red">
+  mouse event
+</h1>
