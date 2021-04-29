@@ -39,11 +39,11 @@ align-items: center;
     font-size: 58px;
     color: white;
 
-    &green{
+    &.green{
       color: lighten($green,12%);
 
     }
-    &red{
+    &.red{
       color:lighten($red,12%);
 
     }
