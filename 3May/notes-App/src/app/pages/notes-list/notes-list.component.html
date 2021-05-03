@@ -12,8 +12,10 @@
 
   <div class="notes-list">
     <app-note-card
-      *ngFor="let note of notes"
+      *ngFor="let note of notes; index as i"
+      [link]="i"
       [title]="note.title"
+      (delete)="deleteNote(i)"
       [body]="note.body"
     ></app-note-card>
   </div>
