@@ -4,8 +4,9 @@
       <p class="control has-icons-left">
         <input
           type="text"
+          #filterInput
           class="input"
-          (change)="filter($event)"
+          (keyup)="filter()"
           placeholder="Filter"
         />
         <span class="icon is-small is-left">
@@ -18,10 +19,10 @@
   <div class="notes-list" [@listAnim]>
     <app-note-card
       *ngFor="let note of filteredNotes; index as i"
-      [link]="i"
+      [link]="generateNoteUrl(note)"
       [@itemAnim]
       [title]="note.title"
-      (delete)="deleteNote(i)"
+      (delete)="deleteNote(note)"
       [body]="note.body"
     ></app-note-card>
   </div>

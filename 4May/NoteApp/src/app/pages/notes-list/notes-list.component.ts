@@ -6,7 +6,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Note } from 'src/app/shared/note.module';
 import { NotesService } from 'src/app/shared/notes.service';
 
@@ -101,26 +101,39 @@ import { NotesService } from 'src/app/shared/notes.service';
   ],
 })
 export class NotesListComponent implements OnInit {
+  @ViewChild('filterInput') filterInputElRef: ElementRef<HTMLInputElement>;
   notes: Note[] = new Array<Note>();
   filteredNotes: Note[] = new Array<Note>();
   constructor(private notesService: NotesService) {}
 
   ngOnInit(): void {
     this.notes = this.notesService.getAll();
-    this.filteredNotes = this.notes;
+  }
+  ngAfterViewInit() {
+    this.filter();
   }
 
-  deleteNote(id: number) {
-    this.notesService.delete(id);
+  deleteNote(note: Note) {
+    let noteId = this.notesService.getId(note);
+    this.notesService.delete(noteId);
+    this.filter();
   }
-  filter(query: any) {
-    query = query.target.value;
+
+  generateNoteUrl(note: Note) {
+    let noteId = this.notesService.getId(note);
+    return noteId;
+  }
+
+  filter() {
+    let query = this.filterInputElRef.nativeElement.value;
 
     query = query.toLowerCase().trim();
+
     let allResults: Note[] = new Array<Note>();
     // split up the search query into individual words
-    let terms: string[] = query.split(''); // split on spaces
+    let terms: string[] = query.split(' '); // split on spaces
     // remove duplicate search terms
+
     terms = this.removeDuplicates(terms);
     // compile all relavant results into the allResults array
     terms.forEach((term) => {
@@ -133,8 +146,10 @@ export class NotesListComponent implements OnInit {
     // but we don't want to show the same note multiple times
     //so we first must review
     let uniqueResults = this.removeDuplicates(allResults);
-
     this.filteredNotes = uniqueResults;
+
+    // now sort by relavancy
+    this.sortByRelavance(allResults);
   }
   removeDuplicates(arr: Array<any>) {
     let uniqueResults: Set<any> = new Set<any>();
@@ -144,6 +159,7 @@ export class NotesListComponent implements OnInit {
   }
   relevantNotes(query: any) {
     query = query.toLowerCase().trim();
+    console.log('typye', typeof query);
     let relevantNotes = this.notes.filter((note) => {
       if (note.title && note.title.toLowerCase().includes(query)) {
         return true;
@@ -154,5 +170,31 @@ export class NotesListComponent implements OnInit {
       return false;
     });
     return relevantNotes;
+  }
+  sortByRelavance(searchResults: Note[]) {
+    // This method will calculate the relavancy of a note based on the number
+    // of times it appears in the search result
+
+    let noteCountObj: Object = {}; // format - key:value => NoteId:number (note object id : count)
+
+    searchResults.forEach((note) => {
+      let noteId = this.notesService.getId(note); // get the notes id
+
+      if (noteCountObj[noteId]) {
+        noteCountObj[noteId] += 1;
+      } else {
+        noteCountObj[noteId] = 1;
+      }
+    });
+
+    this.filteredNotes = this.filteredNotes.sort((a: Note, b: Note) => {
+      let aId = this.notesService.getId(a);
+      let bId = this.notesService.getId(b);
+
+      let aCount = noteCountObj[aId];
+      let bCount = noteCountObj[bId];
+
+      return bCount - aCount;
+    });
   }
 }
