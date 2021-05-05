@@ -1,0 +1,38 @@
+.tabs{
+display: flex;
+
+gap: 14px;
+
+background-color: rgba(white,0.5);
+backdrop-filter: blur(3px);
+border-radius: 12px;
+
+padding: 10px;
+}
+
+.tab{
+  position: relative;
+}
+
+.tab-tile{
+  display: flex;
+border-radius: 10px;
+background: linear-gradient(45deg,#f8b5a5,#e2d2fd);
+  padding: 18px;
+  background: rgba(black,0.1);
+  cursor: pointer;
+
+  i{
+    color: #222;
+    }
+}
+
+.tab-tile::before{
+  content: '';
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba( violet,0.5);
+}
