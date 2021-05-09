@@ -1,18 +1,15 @@
-<div class="todo-item completed">
-  <div class="check-box">
-    <i class="material-icons-outlined">check</i>
-  </div>
-  <p class="todo-text">This is completed</p>
-</div>
+<div class="todo-item" [class.completed]="todo.completed">
+    <div class="check-box">
+        <i class="material-icons-outlined">check</i>
+    </div>
+    <p class="todo-text">{{ todo.text }}</p>
 
-<div class="todo-item">
-  <div class="check-box">
-    <i class="material-icons-outlined">check</i>
-  </div>
-  <p class="todo-text">
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque enim
-    tempora dignissimos accusantium numquam reprehenderit corrupti, possimus
-    sequi assumenda dolore nulla iste, adipisci cupiditate natus dolores optio
-    et tenetur delectus!
-  </p>
+    <div class="todo-item-actions" (click)="$event.stopPropagation()">
+        <div class="btn todo-item-action-btn" (click)="onEditClick()">
+            <i class="material-icons">edit</i>
+        </div>
+        <div class="btn todo-item-action-btn" (click)="onDeleteClick()">
+            <i class="material-icons">delete</i>
+        </div>
+    </div>
 </div>

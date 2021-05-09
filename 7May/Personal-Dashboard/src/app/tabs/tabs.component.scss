@@ -1,114 +1,126 @@
 .tabs {
-  display: flex;
+    display: flex;
+    gap: 14px;
 
-  gap: 14px;
+    background-color: rgba(white, 0.25);
+    backdrop-filter: blur(3px);
 
-  background-color: rgba(white, 0.5);
-  backdrop-filter: blur(3px);
-  border-radius: 12px;
-
-  padding: 10px;
+    border-radius: 12px;
+    
+    padding: 10px;
+    margin: 12px;
+    margin-top: 50px;
 }
 
 .tab {
-  position: relative;
-  text-decoration: none;
-  z-index: 1;
+    position: relative;
+
+    text-decoration: none;
+    
+    z-index: 1;
 }
 
 .tab-tile {
-  display: flex;
-  padding: 18px;
-  background: rgba(black, 0.1);
-  cursor: pointer;
+    display: flex;
+    
+    padding: 18px;
 
-  i {
-    color: #222;
-  }
+    cursor: pointer;
+    
+    i {
+        color: #222;
+    }
 
-  transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
 }
 
 .tab.selected .tab-tile {
-  transform: translateY(-50%);
+    transform: translateY(-50%);
 
-  border-radius: 50%;
-
-  transition-duration: 0.4s;
-  transition-timing-function: cubic-bezier(0, 0, 0, 1.25);
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0, 0, 0, 2);
 }
-//Styles for the tab tile background 'shape'
+
+// STYLES FOR THE TAB TILE BACKGROUND 'SHAPE'
 
 .tab-tile::before {
-  content: "";
-  top: 0;
-  left: 0;
+    content: '';
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    z-index: -1;
+    
+    height: 100%;
+    width: 100%;
 
-  position: absolute;
-  height: 100%;
-  width: 100%;
+    border-radius: 10px;
 
-  border-radius: 10px;
-  z-index: -1;
+    opacity: 0.9;
 
-  transition: all 0.2s;
+    transition: all 0.2s;
 }
 
 .bookmarks-tab .tab-tile::before {
-  background: linear-gradient(45deg, #f8b5a5, #e2d2fd);
+    background: linear-gradient(45deg, #f8b5a5, #e2d2fd);
 }
 
 .todos-tab .tab-tile::before {
-  background: linear-gradient(45deg, #a2ffff, #ffbdde);
+    background: linear-gradient(45deg, #a2ffff, #ffbdde);
 }
 
 .notes-tab .tab-tile::before {
-  background: linear-gradient(45deg, #d2cdff, #5fffbc);
+    background: linear-gradient(45deg, #d2cdff, #5fffbc);
 }
 
 .tab-tile:hover::before {
-  opacity: 1;
-  transform: scale(1.1);
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 .tab.selected .tab-tile::before {
-  opacity: 1;
-  border-radius: 50%;
-  transform: scale(1.1);
-  box-shadow: 0px 4px 17px rgba(black, 0.28);
-  transition-delay: 0.2s;
+    opacity: 1;
+    transform: scale(1.1);
+    border-radius: 50%;
+
+    box-shadow: 0px 7px 17px rgba(black, 0.12);
+
+    transition-delay: 0.2s;
 }
 
-// End of tab tile background 'shape' styles
+// END OF TAB TILE BACKGROUND 'SHAPE' STYLES
 
-// styles for underline element
+
+
+
+// STYLES FOR THE UNDERLINE EFFECT
 
 .tab::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  right: 0;
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
 
-  height: 5px;
-  width: 50%;
+    height: 3px;
+    width: 50%;
 
-  margin: auto;
+    margin: auto;
 
-  background-color: rgba(white, 0.85);
+    background-color: rgba(white, 0.85);
 
-  transition: all 0.2s;
-
-  // hide by default
-  opacity: 0;
-  // transform: scaleX(0);
+    transition: all 0.2s;
+    
+    // hide by default
+    opacity: 0;
+    transform: scaleX(0);
 }
 
 .tab.selected::after {
-  opacity: 1;
-  transform: scaleX(1);
-  transition-delay: 0.2s;
+    opacity: 1;
+    transform: scaleX(1);
+    transition-delay: 0.2s;
 }
-.tab.selected {
-  outline: none;
-}
+
+.tab.selected { outline: none; }
