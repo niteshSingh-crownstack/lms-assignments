@@ -108,10 +108,11 @@ export class NotesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.notes = this.notesService.getAll();
+    setTimeout(() => {
+      this.filter();
+    }, 0);
   }
-  ngAfterViewInit() {
-    this.filter();
-  }
+  ngAfterViewInit() {}
 
   deleteNote(note: Note) {
     let noteId = this.notesService.getId(note);
