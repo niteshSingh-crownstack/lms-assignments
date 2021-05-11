@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search/search.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [SearchComponent],
   imports: [
     CommonModule,
-    SearchRoutingModule
-  ]
+    SearchRoutingModule,
+    ReactiveFormsModule,
+    NgxPaginationModule,
+  ],
 })
-export class SearchModule { }
+export class SearchModule {}
