@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormArray,
-  AbstractControl,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { zipcodeValidator, passValidator } from './validator';
 import { takeWhile } from 'rxjs/operators';
+import { _statesData } from './data';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,6 +12,8 @@ export class AppComponent implements OnInit {
   title = 'app';
   alive = true;
   form!: FormGroup;
+  statesData = _statesData;
+  cityArr: string[] | undefined = [];
 
   constructor(private fb: FormBuilder) {}
   ngOnInit() {
@@ -59,8 +56,13 @@ export class AppComponent implements OnInit {
     console.log(this.form.value);
   }
 
-  //for testing
-  showForm() {
-    console.log('worked');
+  onStateChange(selectedState: string) {
+    let cityObj = this.statesData.find((n1) => n1.state == selectedState);
+
+    this.cityArr = cityObj?.cities;
   }
+  //============for testing=========== >>
+  // showForm() {
+  //   console.log('worked');
+  // }
 }

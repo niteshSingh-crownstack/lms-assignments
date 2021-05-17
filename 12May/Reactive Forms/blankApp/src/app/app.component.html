@@ -3,7 +3,7 @@
     <div class="col-8">
       <div class="jumbotron">
         <h3>Reactive Form Custom Valdiation</h3>
-        {{ showForm() }}
+        <!-- {{ showForm() }} -->
 
         <div>
           <!-- registration form starts here -->
@@ -17,6 +17,20 @@
                 id="usernameInput"
                 placeholder="Enter username"
               />
+
+              <span *ngIf="form.touched">
+                <i
+                  class="fa fa-check-circle"
+                  style="color: green"
+                  *ngIf="form.controls.username.valid"
+                ></i>
+                <i
+                  class="fa fa-times-circle"
+                  style="color: firebrick"
+                  *ngIf="form.controls.username.invalid"
+                ></i>
+                Username should be minimum 4 characters long.
+              </span>
             </div>
 
             <div class="form-group">
@@ -39,6 +53,19 @@
                 id="confpasswordInput"
                 placeholder="Re-enter Password"
               />
+              <span *ngIf="form.touched">
+                <i
+                  class="fa fa-check-circle"
+                  style="color: green"
+                  *ngIf="form.controls.cnfpass.valid"
+                ></i>
+                <i
+                  class="fa fa-times-circle"
+                  style="color: firebrick"
+                  *ngIf="form.controls.cnfpass.invalid"
+                ></i>
+                Password and confirm password should match.
+              </span>
             </div>
 
             <div class="form-group">
@@ -50,6 +77,20 @@
                 id="zipcodeinput"
                 placeholder="Enter Zip Code"
               />
+
+              <span *ngIf="form.touched">
+                <i
+                  class="fa fa-check-circle"
+                  style="color: green"
+                  *ngIf="form.controls.zip.valid"
+                ></i>
+                <i
+                  class="fa fa-times-circle"
+                  style="color: firebrick"
+                  *ngIf="form.controls.zip.invalid"
+                ></i>
+                Zip code should be 6 digit number only.
+              </span>
             </div>
 
             <br /><br />
@@ -58,7 +99,7 @@
             <div class="formarray-wrapper" formArrayName="address">
               <div
                 class="form-group"
-                *ngFor="let item of addressArray.controls; index as i"
+                *ngFor="let group of addressArray.controls; index as i"
                 [formGroupName]="i"
               >
                 <div class="row">
@@ -83,23 +124,70 @@
                 <hr />
                 <div class="row">
                   <div class="col-6">
-                    <label>State</label>
-                    <input
+                    <label for="state">State</label>
+                    <select
+                      id="inputState"
                       formControlName="state"
-                      type="text"
-                      class="form-control"
-                      placeholder="Select State"
-                    />
-                    <small *ngIf="item.controls.state"></small>
+                      [ngClass]="{
+                        'form-control': true,
+                        'is-invalid':
+                          group.controls.state.invalid &&
+                          group.controls.state.touched,
+                        'is-valid': group.controls.state.valid
+                      }"
+                      (ngModelChange)="
+                        onStateChange(group.controls.state.value)
+                      "
+                    >
+                      <option selected [ngValue]="null">Choose...</option>
+                      <option
+                        *ngFor="let item of statesData"
+                        [value]="item.state"
+                      >
+                        {{ item.state }}
+                      </option>
+                    </select>
+                    <small
+                      *ngIf="
+                        group.controls.state.invalid &&
+                        group.controls.state.touched
+                      "
+                      class="form-text custom-invalid-feedback"
+                      >Field is required</small
+                    >
                   </div>
+                  <!-- ============== -->
                   <div class="col-6">
-                    <label>City</label>
-                    <input
+                    <label for="inputCity"
+                      >Cities
+                      <small>(you can choose multiple cities)</small></label
+                    >
+                    <select
+                      id="inputCity"
                       formControlName="city"
-                      type="text"
-                      class="form-control"
-                      placeholder="Select City"
-                    />
+                      [ngClass]="{
+                        'form-control': true,
+                        'is-invalid':
+                          group.controls.city.invalid &&
+                          group.controls.city.touched,
+                        'is-valid': group.controls.city.valid
+                      }"
+                      #multipleCity
+                      [multiple]="group.controls.state.value !== null"
+                    >
+                      <option selected [ngValue]="null">Choose...</option>
+                      <option *ngFor="let item of cityArr" [value]="item">
+                        {{ item }}
+                      </option>
+                    </select>
+                    <small
+                      *ngIf="
+                        group.controls.city.invalid &&
+                        group.controls.city.touched
+                      "
+                      class="form-text custom-invalid-feedback"
+                      >Field is required</small
+                    >
                   </div>
                 </div>
               </div>
@@ -111,47 +199,6 @@
 
             <br /><br />
             <hr />
-            <div class="validations" *ngIf="form.touched">
-              <span>
-                <i
-                  class="fa fa-check-circle"
-                  style="color: green"
-                  *ngIf="form.controls.username.valid"
-                ></i>
-                <i
-                  class="fa fa-times-circle"
-                  style="color: firebrick"
-                  *ngIf="form.controls.username.invalid"
-                ></i>
-                Username should be minimum 4 characters long.
-              </span>
-              <span>
-                <i
-                  class="fa fa-check-circle"
-                  style="color: green"
-                  *ngIf="form.controls.zip.valid"
-                ></i>
-                <i
-                  class="fa fa-times-circle"
-                  style="color: firebrick"
-                  *ngIf="form.controls.zip.invalid"
-                ></i>
-                Zip code should be 6 digit number only.
-              </span>
-              <span>
-                <i
-                  class="fa fa-check-circle"
-                  style="color: green"
-                  *ngIf="form.controls.cnfpass.valid"
-                ></i>
-                <i
-                  class="fa fa-times-circle"
-                  style="color: firebrick"
-                  *ngIf="form.controls.cnfpass.invalid"
-                ></i>
-                Password and confirm password should match.
-              </span>
-            </div>
           </form>
         </div>
       </div>
