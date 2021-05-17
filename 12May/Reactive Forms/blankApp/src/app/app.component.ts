@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { zipcodeValidator, passValidator } from './validator';
-
+import { takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,7 +9,7 @@ import { zipcodeValidator, passValidator } from './validator';
 })
 export class AppComponent {
   title = 'app';
-
+  alive = true;
   form: FormGroup;
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -19,11 +19,13 @@ export class AppComponent {
       zip: ['', zipcodeValidator],
     });
 
-    this.form.controls.password.valueChanges.subscribe((x) =>
-      this.form.controls.cnfpass.updateValueAndValidity()
-    );
+    this.form.controls.password.valueChanges
+      .pipe(takeWhile((_) => this.alive))
+      .subscribe((x) => this.form.controls.cnfpass.updateValueAndValidity());
   }
-
+  ngOnDestroy() {
+    this.alive = false;
+  }
   onSubmit() {
     // console.log(this.form.controls.zip);
     this.form.markAsTouched();
