@@ -9,6 +9,6 @@ export class TaskService {
 
   createList(title: string) {
     //send web request to create list
-    return this.webReqService.post('/list', { title });
+    return this.webReqService.post('lists', { title });
   }
 }
