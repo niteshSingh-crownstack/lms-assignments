@@ -1,3 +1,5 @@
+// This is where we put global styles and change variable values
+
 // Import Fonts (Lato and Nunito)
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700|Nunito:400,700");
 
@@ -53,14 +55,6 @@ body {
   font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 2px;
-}
-.modal-box {
-  min-height: 200px;
-  width: 100%;
-  max-width: 500px;
-  background: white;
-  border-radius: 5px;
-  padding: 35px;
 }
 
 .white-box {
